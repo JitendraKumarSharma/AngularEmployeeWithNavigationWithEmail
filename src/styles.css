@@ -1,0 +1,144 @@
+/* You can add global styles to this file, and also import other style files */
+.checkradio{
+    width:18px;
+    height:18px;
+}
+.ngb-dp-month[_ngcontent-c3] {
+    pointer-events: none;
+    width: 223px;
+}
+.ngb-dp-day[_ngcontent-c6], .ngb-dp-weekday[_ngcontent-c6], .ngb-dp-week-number[_ngcontent-c6] {
+    width: 4rem!important;
+    height: 2rem;
+}
+.ngb-dp-navigation-select[_ngcontent-c5] {
+    flex-grow: 4!important;
+    flex-basis: 10rem!important;
+}
+.ngb-dp-header[_ngcontent-c3] {
+    padding-bottom: 10px!important;
+}
+
+select[_ngcontent-c7] {
+    font-size: 1.5rem!important;
+}
+
+[_nghost-c4] {
+    text-align: center;
+    width: 3rem!important;
+    height: 2rem;
+    line-height: 2rem;
+    border-radius: 0.25rem;
+    background: transparent;
+}
+
+/* Common CSS Stat*/
+
+span > a.current{
+    background: #7cb342!important;
+    color: white!important;
+}
+
+div > a.disabled{
+    border: none!important;
+    text-shadow: none!important;
+    background: 0 0!important;
+    color: #aaa!important;
+    cursor: default!important;
+    pointer-events: none!important;
+}
+
+a:active,
+a:hover {
+    outline: 0!important;
+    background: #e1efd2!important;
+    border-radius: 2px!important;
+}
+
+a {
+    color: #337ab7;
+    text-decoration: none;
+      border: none!important;
+      padding: 4px 8px!important;
+      min-width: 32px!important;
+      line-height: 24px!important;
+      box-sizing: border-box!important;
+      cursor: pointer!important;
+      border-radius: 2px!important;
+  }
+
+  a:hover,
+a:focus {
+  color: #23527c!important;
+        text-decoration: none!important;
+}
+
+.h6 {
+    font-family: inherit;
+    font-weight: 700!important;
+    line-height: 1.1!important;
+    color: inherit!important;
+  }
+
+  .h4 {
+    font-size: 20px!important;
+  }
+
+  .bg-primary {
+    color: #fff!important;
+    background-color: #337ab7!important;
+  }
+
+  .row {
+    margin-right: -15px!important;
+    margin-left: -15px!important;
+    padding: 2px!important;
+  }
+
+  .btn:hover,
+.btn:focus,
+.btn.focus {
+  color:#fff!important;
+  text-decoration: none!important;
+}
+
+.close {
+    float: right!important;
+    font-size: 21px!important;
+    font-weight: bold!important;
+    line-height: 1!important;
+    color: #000!important;
+    text-shadow: 0 1px 0 #fff;
+    filter: alpha(opacity=20);
+    opacity: .5!important;
+    margin-top: -25px!important;
+  }
+
+  .modal-content {
+    position: absolute!important;
+    width:100%;
+    background-color: #fff;
+    -webkit-background-clip: padding-box!important;
+            background-clip: padding-box!important;
+    border: 1px solid #999!important;
+    border: 1px solid rgba(0, 0, 0, .2)!important;
+    border-radius: 6px!important;
+    outline: 0!important;
+    -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, .5)!important;
+            box-shadow: 0 3px 9px rgba(0, 0, 0, .5)!important;
+  }
+
+  .modal-backdrop.show{
+    opacity:.5!important;
+  }
+
+  
+  .datewidth{
+    width: 100%!important;
+  }
+  .drpwidth{
+    width: 100%!important;
+    height: 30px!important;
+  }
+
+  /* Common CSS End*/

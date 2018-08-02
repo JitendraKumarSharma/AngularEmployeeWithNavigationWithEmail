@@ -1,0 +1,258 @@
+<div class="col-md-12">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+        <form class="form-horizontal" [formGroup]="form" enctype="multipart/form-data">
+            <div class="container">
+                <h2 style="text-align:center;font-weight:bold;font-family:'Times New Roman'">Employee Detail</h2>
+                <div class="col-md-12">
+                    <div class="col-md-6">
+                        <div class="row" [ngClass]="displayFieldCss('EmployeeName')">
+                            <div class="col-md-12">
+                                <div class="col-md-4">
+                                    <label for="name" class="control-label required">Name</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <input type="text" id="txtEmployee" [(ngModel)]="Name_M" class="form-control" #empname formControlName="EmployeeName">
+                                    <input type="hidden" id="hdnEmpId" [(ngModel)]="Id_M" formControlName="EmpId">
+                                    <app-field-error-display [displayError]="isFieldValid('EmployeeName')" errorMsg="Please Enter Name!!">
+                                    </app-field-error-display>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" [ngClass]="displayFieldCss('Email')">
+                            <div class="col-md-12">
+                                <div class="col-md-4">
+                                    <label for="email" class="control-label required">Email</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <input type="text" id="txtEmail" [(ngModel)]="Email_M" class="form-control" formControlName="Email">
+                                    <app-field-error-display [displayError]="isFieldValid('Email')" errorMsg="Please Enter Valid Email!!">
+                                    </app-field-error-display>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" [ngClass]="displayFieldCss('Age')">
+                            <div class="col-md-12">
+                                <div class="col-md-4">
+                                    <label for="age" class="control-label required">Age</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <input type="text" id="txtAge" [(ngModel)]="Age_M" class="form-control" formControlName="Age" (keypress)="keyPress($event)"
+                                        maxlength="2">
+                                    <app-field-error-display [displayError]="isFieldValid('Age')" errorMsg="Please Enter Age!!">
+                                    </app-field-error-display>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" [ngClass]="displayFieldCss('CountryId')">
+                            <div class="col-md-12">
+                                <div class="col-md-4">
+                                    <label for="mobile" class="control-label">Country</label>
+                                </div>
+                                <div class="col-md-8 form-inline">
+                                    <select formControlName="CountryId" class="form-control drpwidth" [(ngModel)]="country_M" (change)="getStateByCountry()">
+                                        <option value="">--Select--</option>
+                                        <option *ngFor="let country of countryList" [ngValue]="country.CountryId">
+                                            {{country.CountryName}}
+                                        </option>
+                                    </select>
+                                    <app-field-error-display [displayError]="isFieldValid('CountryId')" errorMsg="Please Select Country!!">
+                                    </app-field-error-display>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" [ngClass]="displayFieldCss('StateId')">
+                            <div class="col-md-12">
+                                <div class="col-md-4">
+                                    <label for="mobile" class="control-label">State</label>
+                                </div>
+                                <div class="col-md-8 form-inline">
+                                    <select formControlName="StateId" class="form-control drpwidth" [(ngModel)]="state_M">
+                                        <option value="">--Select--</option>
+                                        <option *ngFor="let state of stateList" [ngValue]="state.StateId">
+                                            {{state.StateName}}
+                                        </option>
+                                    </select>
+                                    <app-field-error-display [displayError]="isFieldValid('StateId')" errorMsg="Please Select State!!">
+                                    </app-field-error-display>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" [ngClass]="displayFieldCss('City')">
+                            <div class="col-md-12">
+                                <div class="col-md-4">
+                                    <label for="city" class="control-label required">City</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <input type="text" id="txtCity" [(ngModel)]="City_M" class="form-control" formControlName="City">
+                                    <app-field-error-display [displayError]="isFieldValid('City')" errorMsg="Please Enter City!!">
+                                    </app-field-error-display>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" [ngClass]="displayFieldCss('ZipCode')">
+                            <div class="col-md-12">
+                                <div class="col-md-4">
+                                    <label for="zipcode" class="control-label required">Zip Code</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <input type="text" id="txtZipCode" [(ngModel)]="ZipCode_M" class="form-control" formControlName="ZipCode" (keypress)="keyPress($event)"
+                                        minlength="6" maxlength="6">
+                                    <app-field-error-display [displayError]="isFieldValid('ZipCode')" errorMsg="Please Enter Zip Code!!">
+                                    </app-field-error-display>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" [ngClass]="displayFieldCss('Mobile')">
+                            <div class="col-md-12">
+                                <div class="col-md-4">
+                                    <label for="mobile" class="control-label required">Mobile</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <input type="text" id="txtMobile" [(ngModel)]="Mobile_M" class="form-control" formControlName="Mobile" minlength="10" maxlength="10"
+                                        (keypress)="keyPress($event)">
+                                    <app-field-error-display [displayError]="isFieldValid('Mobile')" errorMsg="Please Enter Valid 10 Digit Mobile!!">
+                                    </app-field-error-display>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" [ngClass]="displayFieldCss('Gender')">
+                            <div class="col-md-12">
+                                <div class="col-md-4">
+                                    <label for="mobile" class="control-label required">Gender</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="row">
+                                        <div class="col form-inline">
+                                            <input type="radio" [(ngModel)]="Gender_M" class="checkradio" name="Gender" value="Male" formControlName="Gender"> Male
+                                        </div>
+                                        <div class="col form-inline">
+                                            <input type="radio" [(ngModel)]="Gender_M" class="checkradio" name="Gender" value="Female" formControlName="Gender"> Female
+                                        </div>
+                                    </div>
+                                    <app-field-error-display [displayError]="isFieldValid('Gender')" errorMsg="Please Select Gender!!">
+                                    </app-field-error-display>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="row" [ngClass]="displayFieldCss('IsMarried')">
+                            <div class="col-md-12">
+                                <div class="col-md-4">
+                                    <label for="mobile" class="control-label required">Is Married</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <input type="checkbox" name="tc" class="checkradio" [(ngModel)]="IsMarried_M" formControlName="IsMarried">
+                                    <app-field-error-display [displayError]="isFieldValid('IsMarried')" errorMsg="Please Check!!">
+                                    </app-field-error-display>
+                                </div>
+                            </div>
+                        </div> -->
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-4">
+                                    <label for="mobile" class="control-label">Is Married</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <input type="checkbox" name="tc" class="checkradio" [(ngModel)]="IsMarried_M" formControlName="IsMarried">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" [ngClass]="displayFieldCss('DOB')">
+                            <div class="col-md-12">
+                                <div class="col-md-4">
+                                    <label for="mobile" class="control-label required">DOJ</label>
+                                </div>
+                                <div class="col-md-8 form-inline">
+                                    <input class="form-control datewidth" (click)="d.toggle()" [(ngModel)]="DOB_M" format="dd-MM-yyyy" placeholder="dd-MM-yyyy"
+                                        formControlName="DOB" name="dp" ngbDatepicker #d="ngbDatepicker">
+                                    <app-field-error-display [displayError]="isFieldValid('DOB')" errorMsg="Please select DOB!!">
+                                    </app-field-error-display>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button class="btn btn-primary" type="submit" (click)="onSubmit()">Submit</button>
+                                <button class="btn btn-primary" (click)="reset()">Reset</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <input id="photo" style="display: none" type="file" onchange="readURL(this)" />
+                        <img src="{{url}}/assets/images/employeeimages/{{empImage}}" id="profile-img-tag" style="border: solid 1px #000; cursor: pointer;width:220px!important;height:200px!important"
+                            onclick="selectFile()" />
+                    </div>
+                </div>
+            </div>
+        </form>
+        <br />
+        <div class="col-md-12">
+            <div *ngIf="empDelArr.length>0">
+                <button (click)="open(deleteEmp,0)" class="btn btn-danger">Delete Selected Record(s)</button>
+            </div>
+            <br />
+            <table id="example" class="table table-striped table-bordered" [cellSpacing]="0" style="width:100%">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Age</th>
+                        <th>City</th>
+                        <th>ZipCode</th>
+                        <th>Mobile</th>
+                        <th>Gender</th>
+                        <th>Is Married</th>
+                        <th>DOJ</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let emp of employees; let i = index;">
+                        <td>
+                            <input class="checkradio" type="checkbox" (change)="checkbox(emp)" />
+                        </td>
+                        <td class="text-nowrap">
+                            <a href="javascript:void(0)" (click)="Edit(emp)">{{emp.Name}}</a>
+                        </td>
+                        <td>{{emp.Email}}</td>
+                        <td class="text-right">{{emp.Age}}</td>
+                        <td>{{emp.City}}</td>
+                        <td class="text-right">{{emp.ZipCode}}</td>
+                        <td class="text-right">{{emp.Mobile}}</td>
+                        <td>{{emp.Gender}}</td>
+                        <td>{{emp.IsMarried==1 ? "Yes" : "No"}}</td>
+                        <td class="text-right">{{emp.DOB | date: 'dd/MM/yyyy'}}</td>
+                        <td>
+                            <button class="btn btn-primary" (click)="open(deleteEmp,emp)">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-12">
+            <!-- <pre>{{closeResult}}</pre> -->
+        </div>
+    </div>
+    <div class="col-md-1"></div>
+</div>
+<ng-template #deleteEmp let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Warning</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <p>Sure you want to delete selected record(s)?</p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="c(deleteEmployee())">Yes</button>
+        <button type="button" class="btn btn-primary" (click)="c('Close click')">No</button>
+    </div>
+</ng-template>
+
+<!-- <ul>
+    <li *ngFor="let user of employees">{{ user.EmpId }} {{ user.Age }} {{ user.Name }}</li>
+</ul> -->
