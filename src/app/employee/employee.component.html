@@ -173,14 +173,15 @@
 
                         <div class="row">
                             <div class="col-md-12">
-                                <button class="btn btn-primary" type="submit" (click)="onSubmit()">Submit</button>
+                                <button class="btn btn-primary" [disabled]="!form.valid" type="submit" (click)="onSubmit()">Submit</button>
                                 <button class="btn btn-primary" (click)="reset()">Reset</button>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <input id="photo" style="display: none" type="file" onchange="readURL(this)" />
-                        <img src="{{url}}/assets/images/employeeimages/{{empImage}}" id="profile-img-tag" style="border: solid 1px #000; cursor: pointer;width:220px!important;height:200px!important"
+                        <!-- <img src="{{url}}/assets/images/employeeimages/{{empImage}}" id="profile-img-tag" style="border: solid 1px #000; cursor: pointer;width:220px!important;height:200px!important" -->
+                        <img src="{{url}}/{{empImage}}" id="profile-img-tag" style="border: solid 1px #000; cursor: pointer;width:220px!important;height:200px!important"
                             onclick="selectFile()" />
                     </div>
                 </div>

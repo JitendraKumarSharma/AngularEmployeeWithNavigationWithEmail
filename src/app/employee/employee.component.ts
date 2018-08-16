@@ -120,8 +120,8 @@ export class EmployeeComponent implements OnInit {
     Email_M: string;
     Age_M: number;
     City_M: string;
-    ZipCode_M: number;
-    Mobile_M: number;
+    ZipCode_M: string;
+    Mobile_M: string;
     Gender_M: string;
     IsMarried_M: boolean = false;
     DOB_M: NgbDateStruct;
@@ -153,7 +153,8 @@ export class EmployeeComponent implements OnInit {
         this.employeeService.getAllCountry()
             .subscribe(
                 data => {
-                    this.countryList = data[0];
+                    //this.countryList = data[0]; //For NodeJs API
+                    this.countryList = data;
                     this.country_M = this.countryList[0].CountryId;
                     this.getStateByCountry();
                 });
@@ -194,7 +195,8 @@ export class EmployeeComponent implements OnInit {
         this.employeeService.getEmployeeDB()
             .subscribe(
                 data => {
-                    this.employees = data[0];
+                    //this.employees = data[0]; //For NodeJs API
+                    this.employees = data;
                     this.reInitDatatable();
                 });
     }
@@ -316,13 +318,15 @@ export class EmployeeComponent implements OnInit {
     }
 
     deleteEmployee() {
+        debugger
         if (this.flag == 1) {
             var self = this;
             var promise = new Promise(function (reslove, reject) {
                 self.employeeService.deleteEmployeeByEmpIdDB(self.empDel.EmpId)
                     .subscribe(
                         data => {
-                            self.Id_M = data[0];
+                            //self.Id_M = data[0];
+                            self.Id_M = data; //For NodeJs API
                             reslove(self.Id_M);
                         });
             });
@@ -498,8 +502,8 @@ export class EmployeeComponent implements OnInit {
                 self.employeeService.updateEmployeeDB(newEmployee)
                     .subscribe(
                         data => {
-                            //self.Id_M = data[0][0].EmpId;
-                            if (data[0][0].EmpId == 0) {
+                            //if (data[0][0].EmpId == 0) {
+                            if (data == 0) {
                                 resolve("Employee Alreay Exists!!");
                             }
 
@@ -513,16 +517,16 @@ export class EmployeeComponent implements OnInit {
                     .subscribe(
                         data => {
                             //self.Id_M = data[0][0].EmpId;
-                            if (data[0][0].EmpId == 0) {
+                            if (data == 0) {
                                 resolve("Employee Alreay Exists!!");
                             }
                             else {
-                                var prms = new Promise(function (reslove, reject) {
-                                    self.employeeService.sendEmail(newEmployee)
-                                        .subscribe(
-                                            data => {
-                                            });
-                                });
+                                // var prms = new Promise(function (reslove, reject) {
+                                //     self.employeeService.sendEmail(newEmployee)
+                                //         .subscribe(
+                                //             data => {
+                                //             });
+                                // });
                                 resolve("Employee Added Successfully!!");
                             }
                         });

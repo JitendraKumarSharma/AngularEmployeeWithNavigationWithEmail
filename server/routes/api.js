@@ -8,19 +8,19 @@ const email = require("emailjs/email");
 
 var sql = require("mssql");
 // config for your database
-var config = {
-user: 'sa',
-password: 'sa@123xxx',
-server: 'DESKTOP-KBSC7C0\\SQLEXPRESS',
-database: 'TestingDB'
-};
-
 // var config = {
 //     user: 'sa',
-//     password: 'm2n1shlko',
-//     server: 'P0022',
+// password: 'sa@123xxx',
+// server: 'DESKTOP-KBSC7C0\\SQLEXPRESS',
 //     database: 'TestingDB'
 // };
+
+var config = {
+    user: 'sa',
+    password: 'm2n1shlko',
+    server: 'P0022',
+    database: 'TestingDB'
+};
 
 // var config = {
 //     user: 'kpt1',
@@ -320,14 +320,14 @@ router.post('/SendEmail', (req, res) => {
         to: "Jeetu <jeetusharma.jee@gmail.com>",
         //cc: "else <else@your-email.com>",
         subject: "testing emailjs",
-        // attachment:
-        //     [
-        //         //{ data: "<html>i <i>hope</i> this works!</html>", alternative: true },
-        //         { data: "<html>i <i>hope</i> this works! here is an image: <img src='cid:my-image' width='100' height ='50'> </html>" },
-        //         { path: "F:\\ExpressApp\\EmailApp\\test.rar", type: "application/rar", name: "test.rar" },// For rar files
-        //         //{ path: "path/to/file.zip", type: "application/zip", name: "renamed.zip" },//For zip files
-        //         { path: "F:\\ExpressApp\\EmailApp\\blank.png", type: "image/jpg", headers: { "Content-ID": "<my-image>" } }
-        //     ]
+        attachment:
+            [
+                //{ data: "<html>i <i>hope</i> this works!</html>", alternative: true },
+                { data: "<html>i <i>hope</i> this works! here is an image: <img src='cid:my-image' width='100' height ='50'> </html>" },
+                { path: "F:\\ExpressApp\\EmailApp\\test.rar", type: "application/rar", name: "test.rar" },// For rar files
+                //{ path: "path/to/file.zip", type: "application/zip", name: "renamed.zip" },//For zip files
+                { path: "F:\\ExpressApp\\EmailApp\\blank.png", type: "image/jpg", headers: { "Content-ID": "<my-image>" } }
+            ]
     };
 
     server.send(message, function (err, message) { console.log(err || message); });

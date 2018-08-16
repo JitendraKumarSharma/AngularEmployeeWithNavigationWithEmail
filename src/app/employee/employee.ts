@@ -6,8 +6,8 @@ export class Employee {
     CountryId:number;    
     StateId:number;
     City: string;
-    ZipCode: number;
-    Mobile: number;
+    ZipCode: string;
+    Mobile: string;
     Gender: string;
     IsMarried: boolean = false;
     DOB: Date;
