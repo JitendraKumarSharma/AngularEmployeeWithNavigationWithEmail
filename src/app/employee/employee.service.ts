@@ -36,22 +36,23 @@ export class EmployeeService {
     }
 
     insertEmployeeDB(employee: Employee) {
-        var formData = new FormData();
+        //var formData = new FormData();
 
-        var body = {
-            Name: employee.Name,
-            Email: employee.Email,
-            Age: employee.Age,
-            CountryId: employee.CountryId,
-            StateId: employee.StateId,
-            City: employee.City,
-            ZipCode: employee.ZipCode,
-            Mobile: employee.Mobile,
-            Gender: employee.Gender,
-            IsMarried: employee.IsMarried,
-            DOB: employee.DOB,
-            EmpImage: employee.EmpImage
-        }
+        // var body = {
+        //     Name: employee.Name,
+        //     Email: employee.Email,
+        //     Age: employee.Age,
+        //     CountryId: employee.CountryId,
+        //     StateId: employee.StateId,
+        //     City: employee.City,
+        //     ZipCode: employee.ZipCode,
+        //     Mobile: employee.Mobile,
+        //     Gender: employee.Gender,
+        //     IsMarried: employee.IsMarried,
+        //     DOB: employee.DOB,
+        //     EmpImage: employee.EmpImage
+        // }
+
         // formData.append('Name', employee.Name);
         // formData.append('Email', employee.Email);
         // formData.append('Age', employee.Age.toString());
@@ -66,12 +67,13 @@ export class EmployeeService {
         // formData.append('EmpImage = req.body.params.emp.EmpImage;
         //return this.http.post(this.global.apiUrl + "/employees", { params: { emp: employee } }) // For NodeJs API
 
-        return this.http.post(this.global.apiUrl + "/Employees", body)
+        return this.http.post(this.global.apiUrl + "/Employees", employee)
             .map((res: Response) => res.json());
     }
 
     sendEmail(employee: Employee) {
-        return this.http.post(this.global.apiUrl + "/SendEmail", { params: { emp: employee } })
+        //return this.http.post(this.global.apiUrl + "/SendEmail", { params: { emp: employee } })
+        return this.http.post(this.global.apiUrl + "/SendEmail", employee)
             .map((res: Response) => res.json());
     }
 

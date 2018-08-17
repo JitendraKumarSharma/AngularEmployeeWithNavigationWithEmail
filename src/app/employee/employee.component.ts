@@ -521,13 +521,13 @@ export class EmployeeComponent implements OnInit {
                                 resolve("Employee Alreay Exists!!");
                             }
                             else {
-                                // var prms = new Promise(function (reslove, reject) {
-                                //     self.employeeService.sendEmail(newEmployee)
-                                //         .subscribe(
-                                //             data => {
-                                //             });
-                                // });
-                                resolve("Employee Added Successfully!!");
+                                var prms = new Promise(function (reslove, reject) {
+                                    self.employeeService.sendEmail(newEmployee)
+                                        .subscribe(
+                                            data => {
+                                                resolve("Employee Added Successfully!!");
+                                            });
+                                });
                             }
                         });
             }
