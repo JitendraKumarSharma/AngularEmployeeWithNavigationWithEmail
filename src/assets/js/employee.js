@@ -1,7 +1,8 @@
 var myExtObject = (function () {
     return {
         resetImage: function (url, image) {
-            $("#profile-img-tag").attr("src", url + "/assets/images/employeeimages/" + image);
+            //$("#profile-img-tag").attr("src", url + "/assets/images/employeeimages/" + image);
+            $("#profile-img-tag").attr("src", url + "/" + image);
         }
         //   ,func2: function() {
         //     alert('function 2 called');

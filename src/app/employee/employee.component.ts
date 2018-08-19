@@ -360,7 +360,8 @@ export class EmployeeComponent implements OnInit {
                     self.employeeService.deleteEmployeeByEmpIdDB(self.empDelArr[self.cnt].EmpId)
                         .subscribe(
                             data => {
-                                self.Id_M = data[0].EmpId;
+                                //self.Id_M = data[0].EmpId; //For NodeJs API
+                                self.Id_M = data;
                                 resolve(self.Id_M);
                             });
                 }
