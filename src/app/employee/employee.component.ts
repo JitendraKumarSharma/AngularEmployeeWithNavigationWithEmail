@@ -8,7 +8,7 @@ import * as $ from 'jquery';
 import 'datatables.net';
 import { TemplateRef } from '@angular/core/src/linker/template_ref';
 import { isObject, debuglog } from 'util';
-import { Http, Response } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 //import the do function to be used with the http library.
 import "rxjs/add/operator/do";
 //import the map function to be used with the http library
@@ -43,7 +43,7 @@ export class EmployeeComponent implements OnInit {
         public activeModal: NgbActiveModal,
         private el: ElementRef,
         private renderer: Renderer,
-        private http: Http,
+        private http: HttpClient,
         private global: Globals
     ) {
     }
@@ -494,7 +494,7 @@ export class EmployeeComponent implements OnInit {
             Mobile: this.Mobile_M,
             Gender: this.Gender_M,
             IsMarried: this.IsMarried_M == null ? false : this.IsMarried_M,
-            DOB: new Date(this.DOB_M.year, this.DOB_M.month - 1, this.DOB_M.day),
+            DOB: new Date(this.DOB_M.year, this.DOB_M.month - 1, this.DOB_M.day + 1),
             EmpImage: this.empImage == "blank.png" ? "" : this.empImage
         };
         var self = this;

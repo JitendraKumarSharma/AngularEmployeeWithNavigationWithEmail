@@ -1,38 +1,58 @@
+
+import { map } from 'rxjs/operators';
 import { Injectable, ElementRef, Component } from '@angular/core';
 import { Employee } from './employee';
-import { Http, Response } from '@angular/http';
+import { Country } from '../country';
+import { State } from '../state';
+import { Response } from '@angular/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
-import 'rxjs/add/operator/map';
+import { Observable } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
 import { Globals } from '../globals';
 
 @Injectable()
 export class EmployeeService {
 
 
-    constructor(private http: Http,
+    constructor(private http: HttpClient,
         private el: ElementRef,
         private global: Globals) { }
 
+
     getEmployeeDB() {
-        return this.http.get(this.global.apiUrl + "/employees")
-            .map((res: Response) => res.json());
+        return this.http.get<Employee[]>(this.global.apiUrl + "/employees")
+            .pipe(catchError(this.errorHandler));
+
+        ////Used in Angular 5
+        // return this.http.get(this.global.apiUrl + "/employees").pipe(
+        //     map((res: Response) => res.json()));
+        ////End
     }
 
     getEmployeeByEmpIdDB(Id: number) {
         //return this.http.get(this.global.apiUrl + "/employees/:EmpId", { params: { EmpId: Id } }) //For NodeJs API
-        return this.http.get(this.global.apiUrl + "/employees/" + Id)
-            .map((res: Response) => res.json());
+
+        return this.http.get<Employee[]>(this.global.apiUrl + "/employees/" + Id)
+            .pipe(catchError(this.errorHandler));
+
+        ////Used in Angular 5
+        // return this.http.get(this.global.apiUrl + "/employees/" + Id).pipe(
+        //     map((res: Response) => res.json()));
+        ////End
     }
 
-    // sendEmail(empname: string) {
-    //     return this.http.get(this.global.apiUrl + "/employees/:EmpName", { params: { EmpName: empname } })
-    //         .map((res: Response) => res.json());
-    // }
-
     deleteEmployeeByEmpIdDB(Id: number) {
-        //return this.http.delete(this.global.apiUrl + "/employees/:EmpId", { params: { EmpId: Id } })
-        return this.http.delete(this.global.apiUrl + "/employees/" + Id)
-            .map((res: Response) => res.json());
+        //return this.http.delete(this.global.apiUrl + "/employees/:EmpId", { params: { EmpId: Id } }) //For NodeJs API
+
+        return this.http.delete<number>(this.global.apiUrl + "/employees/" + Id)
+            .pipe(catchError(this.errorHandler));
+
+        ////Used in Angular 5
+        // return this.http.delete(this.global.apiUrl + "/employees/" + Id).pipe(
+        //     map((res: Response) => res.json()));
+        ////End
     }
 
     insertEmployeeDB(employee: Employee) {
@@ -67,14 +87,25 @@ export class EmployeeService {
         // formData.append('EmpImage = req.body.params.emp.EmpImage;
         //return this.http.post(this.global.apiUrl + "/employees", { params: { emp: employee } }) // For NodeJs API
 
-        return this.http.post(this.global.apiUrl + "/Employees", employee)
-            .map((res: Response) => res.json());
+        return this.http.post<number>(this.global.apiUrl + "/Employees", employee)
+            .pipe(catchError(this.errorHandler));
+
+        ////Used in Angular 5
+        // return this.http.post(this.global.apiUrl + "/Employees", employee).pipe(
+        //     map((res: Response) => res.json()));
+        ////End
     }
 
     sendEmail(employee: Employee) {
-        //return this.http.post(this.global.apiUrl + "/SendEmail", { params: { emp: employee } })
-        return this.http.post(this.global.apiUrl + "/SendEmail", employee)
-            .map((res: Response) => res.json());
+        //return this.http.post(this.global.apiUrl + "/SendEmail", { params: { emp: employee } }) //For NodeJs API
+
+        return this.http.post<string>(this.global.apiUrl + "/SendEmail", employee)
+            .pipe(catchError(this.errorHandler));
+
+        ////Used in Angular 5
+        // return this.http.post(this.global.apiUrl + "/SendEmail", employee).pipe(
+        //     map((res: Response) => res.json()));
+        ////End
     }
 
     updateEmployeeDB(employee: Employee) {
@@ -94,9 +125,14 @@ export class EmployeeService {
             EmpImage: employee.EmpImage
         }
         //return this.http.put(this.global.apiUrl + "/employees", { params: { emp: employee } }) // For NodeJs API
-        return this.http.put(this.global.apiUrl + "/Employees", body)
 
-            .map((res: Response) => res.json());
+        return this.http.put<number>(this.global.apiUrl + "/Employees", body)
+            .pipe(catchError(this.errorHandler));
+
+        ////Used in Angular 5
+        // return this.http.put(this.global.apiUrl + "/Employees", body).pipe(
+        //     map((res: Response) => res.json()));
+        ////End
     }
 
     uploadImage() {
@@ -111,27 +147,44 @@ export class EmployeeService {
         //append the key name 'photo' with the first file in the element
         formData.append('photo', inputEl.files.item(0));
         //call the angular http method
-        return this.http
-            //post the form data to the url defined above and map the response. Then subscribe //to initiate the post. if you don't subscribe, angular wont post.
-            .post(this.global.apiUrl + "/Upload", formData)
-            .map((res: Response) => res.json());
-        // .subscribe(
-        // //map the success function and alert the response
-        // (success) => {
-        //     alert(success._body);
-        // },
-        // (error) => alert(error))
+
+        return this.http.post<string>(this.global.apiUrl + "/Upload", formData)
+            .pipe(catchError(this.errorHandler));
+
+        ////Used in Angular 5
+        // return this.http
+        //     //post the form data to the url defined above and map the response. Then subscribe //to initiate the post. if you don't subscribe, angular wont post.
+        //     .post(this.global.apiUrl + "/Upload", formData).pipe(
+        //         map((res: Response) => res.json()));
+        ////End
+
     }
 
     getAllCountry() {
-        return this.http.get(this.global.apiUrl + "/getAllCountry")
-            //.map((res: Response) => alert(res.json()));
-            .map((res: Response) => res.json());
+
+        return this.http.get<Country[]>(this.global.apiUrl + "/getAllCountry")
+            .pipe(catchError(this.errorHandler));
+
+        ////Used in Angular 5
+        // return this.http.get(this.global.apiUrl + "/getAllCountry").pipe(
+        //     //.map((res: Response) => alert(res.json()));
+        //     map((res: Response) => res.json()));
+        ////End
     }
 
     getStateByCountry(Id: number) {
         //return this.http.get(this.global.apiUrl + "/getStateByCountry/:CountryId", { params: { CountryId: Id } }) //For NodeJs API
-        return this.http.get(this.global.apiUrl + "/getStateByCountry/" + Id)
-            .map((res: Response) => res.json());
+
+        return this.http.get<State[]>(this.global.apiUrl + "/getStateByCountry/" + Id)
+            .pipe(catchError(this.errorHandler));
+
+        ////Used in Angular 5
+        // return this.http.get(this.global.apiUrl + "/getStateByCountry/" + Id).pipe(
+        //     map((res: Response) => res.json()));
+        ////End
+    }
+
+    errorHandler(error: HttpErrorResponse) {
+        return throwError(error);
     }
 }
