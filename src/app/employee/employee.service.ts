@@ -135,7 +135,7 @@ export class EmployeeService {
         ////End
     }
 
-    uploadImage() {
+    uploadImage(id: number) {
         debugger
         //locate the file element meant for the file upload.
         let inputEl: HTMLInputElement = this.el.nativeElement.querySelector('#photo');
@@ -146,6 +146,7 @@ export class EmployeeService {
         //check if the filecount is greater than zero, to be sure a file was selected.
         //append the key name 'photo' with the first file in the element
         formData.append('photo', inputEl.files.item(0));
+        formData.append('id', id === undefined || id == null ? '0' : id.toString());
         //call the angular http method
 
         return this.http.post<string>(this.global.apiUrl + "/Upload", formData)

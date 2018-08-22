@@ -19,7 +19,7 @@ import { Globals } from '../globals';
 import { Country } from '../Country';
 import { State } from '../state';
 //import "../../assets/js/employee.js";
-
+import { DomSanitizer } from '@angular/platform-browser';
 declare const myExtObject: any;
 
 @Component({
@@ -44,7 +44,8 @@ export class EmployeeComponent implements OnInit {
         private el: ElementRef,
         private renderer: Renderer,
         private http: HttpClient,
-        private global: Globals
+        private global: Globals,
+        private domSanitizer: DomSanitizer
     ) {
     }
 
@@ -88,14 +89,14 @@ export class EmployeeComponent implements OnInit {
     // }
 
     //Get the key pressed on window
-    @HostListener('document:keyup', ['$event'])
-    handleKeyboardEvent(event: KeyboardEvent) {
-        console.log(event);
-        let x = event.keyCode;
-        if (x === 27) {
-            console.log('Escape!');
-        }
-    }
+    // @HostListener('document:keyup', ['$event'])
+    // handleKeyboardEvent(event: KeyboardEvent) {
+    //     console.log(event);
+    //     let x = event.keyCode;
+    //     if (x === 27) {
+    //         console.log('Escape!');
+    //     }
+    // }
 
     // @HostListener('click') onclick() {
     //     let part = this.el.nativeElement.querySelector('.dropdown-menu');
@@ -197,6 +198,7 @@ export class EmployeeComponent implements OnInit {
                 data => {
                     //this.employees = data[0]; //For NodeJs API
                     this.employees = data;
+                    this.url1 = this.global.imageUrl + "/" + this.empImage;
                     this.reInitDatatable();
                 });
     }
@@ -216,7 +218,8 @@ export class EmployeeComponent implements OnInit {
             let ext: string = (inputEl.files[0].name).split('.')[splitlength - 1];
             if (ext.toLowerCase() == "jpg" || ext.toLowerCase() == "png") {
                 var promoise = new Promise(function (resolve, reject) {
-                    self.employeeService.uploadImage().subscribe(
+                    let id = self.Id_M;
+                    self.employeeService.uploadImage(id).subscribe(
                         data => {
                             resolve(data);
                         }
@@ -403,9 +406,10 @@ export class EmployeeComponent implements OnInit {
             return `with: ${reason}`;
         }
     }
-
+    url1: any;
     Edit(emp: Employee) {
-        //debugger
+        debugger
+        var base64;
         this.employeeService.getEmployeeByEmpIdDB(emp.EmpId)
             .subscribe(
                 data => {
@@ -433,7 +437,11 @@ export class EmployeeComponent implements OnInit {
                     const now = new Date(this.empDel.DOB);
                     this.DOB_M = { day: now.getDate(), month: now.getMonth() + 1, year: now.getFullYear() };
                     this.empImage = this.empDel.EmpImage == "" ? "blank.png" : this.empDel.EmpImage;
+                    base64 = data[0]['EmpImage_Binary'];
+                    this.url1 = this.domSanitizer.bypassSecurityTrustUrl('data:image/jpeg;base64,' + base64)
                 });
+
+        //var imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
     }
 
     public updateEmployee() {
@@ -453,7 +461,8 @@ export class EmployeeComponent implements OnInit {
             let ext: string = (inputEl.files[0].name).split('.')[splitlength - 1];
             if (ext.toLowerCase() == "jpg" || ext.toLowerCase() == "png") {
                 var promoise = new Promise(function (resolve, reject) {
-                    self.employeeService.uploadImage().subscribe(
+                    let id = self.Id_M;
+                    self.employeeService.uploadImage(id).subscribe(
                         data => {
                             resolve(data);
                         }
@@ -509,6 +518,7 @@ export class EmployeeComponent implements OnInit {
                             }
 
                             else {
+                                self.url1 = self.global.imageUrl + "/" + self.empImage;
                                 resolve("Employee Updated Successfully!!");
                             }
                         });
@@ -526,6 +536,7 @@ export class EmployeeComponent implements OnInit {
                                     self.employeeService.sendEmail(newEmployee)
                                         .subscribe(
                                             data => {
+                                                self.url1 = self.global.imageUrl + "/" + self.empImage;
                                                 resolve("Employee Added Successfully!!");
                                             });
                                 });

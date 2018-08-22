@@ -181,8 +181,12 @@
                     <div class="col-md-6">
                         <input id="photo" style="display: none" type="file" onchange="readURL(this)" />
                         <!-- <img src="{{url}}/assets/images/employeeimages/{{empImage}}" id="profile-img-tag" style="border: solid 1px #000; cursor: pointer;width:220px!important;height:200px!important" -->
-                        <img src="{{url}}/{{empImage}}" id="profile-img-tag" style="border: solid 1px #000; cursor: pointer;width:220px!important;height:200px!important"
+                        <img src="{{url}}/{{empImage}}" class="profile-img-tag" style="border: solid 1px #000; cursor: pointer;width:220px!important;height:200px!important"
                             onclick="selectFile()" />
+                        <img [src]="url1" class="profile-img-tag" style="border: solid 1px #000; cursor: pointer;width:220px!important;height:200px!important"
+                            onclick="selectFile()" />
+                        <!-- <img src="{{url}}/{{empImage}}" id="profile-img-tag" style="border: solid 1px #000; cursor: pointer;width:220px!important;height:200px!important"
+                            onclick="selectFile()" /> -->
                     </div>
                 </div>
             </div>
