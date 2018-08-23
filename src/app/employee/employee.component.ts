@@ -417,7 +417,9 @@ export class EmployeeComponent implements OnInit {
         debugger
         //locate the file element meant for the file upload.
         let inputEl: HTMLInputElement = this.el.nativeElement.querySelector('#photo');
-        this.empImage = inputEl.files[0].name;
+        if (inputEl.files.length > 0) {
+            this.empImage = inputEl.files[0].name;
+        }
         let newEmployee: Employee;
         newEmployee = {
             EmpId: this.Id_M,
