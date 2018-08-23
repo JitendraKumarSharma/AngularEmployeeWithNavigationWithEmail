@@ -204,44 +204,7 @@ export class EmployeeComponent implements OnInit {
     }
 
     public createEmployee() {
-        //locate the file element meant for the file upload.
-        let inputEl: HTMLInputElement = this.el.nativeElement.querySelector('#photo');
-        //get the total amount of files attached to the file input.
-        let fileCount: number = inputEl.files.length;
-        //create a new fromdata instance
-        let formData = new FormData();
-        var self = this;
-        if (fileCount > 0) {
-            //Check File Extention        
-            let filename: string = inputEl.files[0].name;
-            let splitlength: number = (inputEl.files[0].name).split('.').length;
-            let ext: string = (inputEl.files[0].name).split('.')[splitlength - 1];
-            if (ext.toLowerCase() == "jpg" || ext.toLowerCase() == "png") {
-                var promoise = new Promise(function (resolve, reject) {
-                    let id = self.Id_M;
-                    self.employeeService.uploadImage(id).subscribe(
-                        data => {
-                            resolve(data);
-                        }
-                    );
-                });
-                var pic;
-                promoise.then(function (res) {
-                    pic = res;
-                    self.empImage = pic;
-                    inputEl.value = "";
-                    self.EmployeeAction("Insert");
-                });
-
-            }
-            else {
-                alert("Please select image file!!");
-            }
-        }
-        else {
-            inputEl.value = "";
-            self.EmployeeAction("Insert");
-        }
+        this.EmployeeAction("Insert");
     }
 
     //Code to enter only number
@@ -315,6 +278,8 @@ export class EmployeeComponent implements OnInit {
 
     reset() {
         this.empImage = "blank.png";
+        this.url1 = this.global.imageUrl + "/" + this.empImage;
+        this.Id_M = 0;
         myExtObject.resetImage(this.url, this.empImage);
         this.form.reset();
         this.getAllCountry();
@@ -445,51 +410,14 @@ export class EmployeeComponent implements OnInit {
     }
 
     public updateEmployee() {
-        //locate the file element meant for the file upload.
-        let inputEl: HTMLInputElement = this.el.nativeElement.querySelector('#photo');
-
-
-        //get the total amount of files attached to the file input.
-        let fileCount: number = inputEl.files.length;
-        //create a new fromdata instance
-        let formData = new FormData();
-        var self = this;
-        if (fileCount > 0) {
-            //Check File Extention        
-            let filename: string = inputEl.files[0].name;
-            let splitlength: number = (inputEl.files[0].name).split('.').length;
-            let ext: string = (inputEl.files[0].name).split('.')[splitlength - 1];
-            if (ext.toLowerCase() == "jpg" || ext.toLowerCase() == "png") {
-                var promoise = new Promise(function (resolve, reject) {
-                    let id = self.Id_M;
-                    self.employeeService.uploadImage(id).subscribe(
-                        data => {
-                            resolve(data);
-                        }
-                    );
-                });
-                var pic;
-                promoise.then(function (res) {
-                    pic = res;
-                    self.empImage = pic;
-                    inputEl.value = "";
-                    self.EmployeeAction("Update");
-                });
-
-            }
-            else {
-                alert("Please select image file!!");
-            }
-        }
-        else {
-            inputEl.value = "";
-            self.EmployeeAction("Update");
-        }
-
+        this.EmployeeAction("Update");
     }
 
     public EmployeeAction(action: string) {
         debugger
+        //locate the file element meant for the file upload.
+        let inputEl: HTMLInputElement = this.el.nativeElement.querySelector('#photo');
+        this.empImage = inputEl.files[0].name;
         let newEmployee: Employee;
         newEmployee = {
             EmpId: this.Id_M,
@@ -518,6 +446,7 @@ export class EmployeeComponent implements OnInit {
                             }
 
                             else {
+                                self.Id_M = data;
                                 self.url1 = self.global.imageUrl + "/" + self.empImage;
                                 resolve("Employee Updated Successfully!!");
                             }
@@ -532,6 +461,7 @@ export class EmployeeComponent implements OnInit {
                                 resolve("Employee Alreay Exists!!");
                             }
                             else {
+                                self.Id_M = data;
                                 var prms = new Promise(function (reslove, reject) {
                                     self.employeeService.sendEmail(newEmployee)
                                         .subscribe(
@@ -546,8 +476,35 @@ export class EmployeeComponent implements OnInit {
         });
         promise.then(function (msg) {
             if (msg != "Employee Alreay Exists!!") {
+                //get the total amount of files attached to the file input.
+                let fileCount: number = inputEl.files.length;
+                if (fileCount > 0) {
+                    //Check File Extention
+                    let splitlength: number = (inputEl.files[0].name).split('.').length;
+                    let ext: string = (inputEl.files[0].name).split('.')[splitlength - 1];
+                    if (ext.toLowerCase() == "jpg" || ext.toLowerCase() == "png") {
+                        var pic;
+                        var promoise1 = new Promise(function (resolve, reject) {
+                            let id = self.Id_M;
+                            self.employeeService.uploadImage(id).subscribe(
+                                data => {
+                                    resolve(data);
+                                }
+                            );
+                        });
+                        promoise1.then(function (res) {
+                            pic = res;
+                            self.Id_M = 0;
+                            self.empImage = pic;
+                            inputEl.value = "";
+                        });
+                    }
+                    else {
+                        alert("Please select image file!!");
+                    }
+                }
+                inputEl.value = "";
                 self.getAllEmployee();
-                self.empImage = "blank.png";
                 alert(msg);
                 self.reset();
             }
